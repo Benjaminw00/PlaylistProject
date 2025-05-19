@@ -23,7 +23,9 @@ public class Song {
 
 
     //METHODS
-
+    public String toString(){
+        return "This is a " + genre + " song called " + name + " by " + artist + ". It has " + streams + " streams.";
+    }
 
     //END OF METHODS
 

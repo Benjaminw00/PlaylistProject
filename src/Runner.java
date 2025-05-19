@@ -21,8 +21,13 @@ public class Runner {
             System.exit(0);
         }
         else if (firstChoice == 2){ //wants to modify a song
-            System.out.println("Test2");
-        }
+            int secondChoice = modifySong();
+            if (secondChoice == 1){ //creates a song
+                System.out.println(makeSong());
+            }
+            else if (secondChoice == 2){ //exits program
+                System.exit(0);}
+            }
         else if (firstChoice == 1){ //wants to modify a playlist
             System.out.println("Test1");
         }
@@ -45,5 +50,38 @@ public class Runner {
             start();
         }
         return finalAction;
+    }
+
+    public static int modifySong(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What you like to:\n1.create a song\n2.end program");
+        int finalAction = 0;
+        try {
+            int action = scan.nextInt();
+            finalAction = action;
+            if (action != 1 && action!=2 ) {
+                System.out.println("---------------------------------------------\nPlease type a valid number.\n---------------------------------------------");
+                modifySong();
+            }
+        } catch (InputMismatchException inputMismatchException) {
+            System.out.println("---------------------------------------------\nSomething went wrong. Please type the number of the option you wish to choose.\n---------------------------------------------");
+            modifySong();
+        }
+        return finalAction;
+    }
+
+    public static Song makeSong(){
+        Scanner scan = new Scanner(System.in);
+        Song finalSong = new Song();
+        System.out.println("What is the song's name?");
+        finalSong.setName(scan.nextLine());
+        System.out.println("What is the song's genre");
+        finalSong.setGenre(scan.nextLine());
+        System.out.println("Who is the artist?");
+        finalSong.setArtist(scan.nextLine());
+        System.out.println("How many streams does the song have?");
+        finalSong.setStreams(scan.nextInt());
+
+        return finalSong;
     }
 }
