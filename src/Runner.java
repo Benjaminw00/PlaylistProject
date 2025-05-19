@@ -17,6 +17,7 @@ public class Runner {
         //Start of actual program (include scanner and try catches)
         System.out.println("Welcome! This is your own playlist maker.\nYou can choose to make a song and then add it to your playlist.\n---------------------------------------------");
         int firstChoice = start();
+        System.out.println(firstChoice);
         if (firstChoice == 3){ //exits program
             System.exit(0);
         }
@@ -25,9 +26,14 @@ public class Runner {
             if (secondChoice == 1){ //creates a song
                 System.out.println(makeSong());
             }
-            else if (secondChoice == 2){ //exits program
-                System.exit(0);}
+            else if (secondChoice == 2){//wants an already made song
+                Song pregeneratedSong = new Song();
+                System.out.println(pregeneratedSong);
             }
+            else if (secondChoice == 3){ //exits program
+                System.exit(0);
+            }
+        }
         else if (firstChoice == 1){ //wants to modify a playlist
             System.out.println("Test1");
         }
@@ -40,26 +46,29 @@ public class Runner {
         int finalAction=0;
         try {
             int action = scan.nextInt();
-            finalAction = action;
             if (action != 1 && action != 2 && action != 3) {
                 System.out.println("---------------------------------------------\nPlease type a valid number.\n---------------------------------------------");
-                start();
+                finalAction = start();
+            }
+            else {
+                finalAction = action;
             }
         } catch (InputMismatchException inputMismatchException) {
             System.out.println("---------------------------------------------\nSomething went wrong. Please type the number of the option you wish to choose.\n---------------------------------------------");
-            start();
+            finalAction = start();
         }
+        System.out.println("Returning final action" + finalAction);
         return finalAction;
     }
 
     public static int modifySong(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("What you like to:\n1.create a song\n2.end program");
+        System.out.println("What you like to:\n1.create a song manually\n2.get an already generated song\n3.end program");
         int finalAction = 0;
         try {
             int action = scan.nextInt();
             finalAction = action;
-            if (action != 1 && action!=2 ) {
+            if (action!=1 && action!=2 && action!=3) {
                 System.out.println("---------------------------------------------\nPlease type a valid number.\n---------------------------------------------");
                 modifySong();
             }
