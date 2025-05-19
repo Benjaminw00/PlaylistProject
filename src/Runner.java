@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Runner {
@@ -14,14 +15,35 @@ public class Runner {
         //END OF TESTS
 
         //Start of actual program (include scanner and try catches)
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome! This is your own playlist maker.\nYou can choose to make a song and then add it to your playlist.\n---------------------------------------------");
-        System.out.println("Would you like to:\n1.modify a list\n2.modify a song");
-        String initialAction = scanner.nextLine();
-        if (!initialAction.equals("modify a list") && !initialAction.equals("modify a song")){
-            throw new IllegalArgumentException("choose one of the choices given in all lower case and include the spaces");
+        int firstChoice = start();
+        if (firstChoice == 3){ //exits program
+            System.exit(0);
         }
-
+        else if (firstChoice == 2){ //wants to modify a song
+            System.out.println("Test2");
+        }
+        else if (firstChoice == 1){ //wants to modify a playlist
+            System.out.println("Test1");
+        }
         //END OF PROGRAM
+    }
+
+    public static int start() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Would you like to:\n1.modify a playlist\n2.modify a song\n3.end program");
+        int finalAction=0;
+        try {
+            int action = scan.nextInt();
+            finalAction = action;
+            if (action != 1 && action != 2 && action != 3) {
+                System.out.println("---------------------------------------------\nPlease type a valid number.\n---------------------------------------------");
+                start();
+            }
+        } catch (InputMismatchException inputMismatchException) {
+            System.out.println("---------------------------------------------\nSomething went wrong. Please type the number of the option you wish to choose.\n---------------------------------------------");
+            start();
+        }
+        return finalAction;
     }
 }
