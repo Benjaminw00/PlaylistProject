@@ -15,6 +15,8 @@ public class Playlist {
         this.listName = name;                     //can be added initially to list
         list.add(firstSong);
     }
+
+    public Playlist(){}
     //END OF CONSTRUCTORS
 
     //METHODS

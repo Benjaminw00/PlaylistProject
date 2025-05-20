@@ -1,42 +1,46 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Runner {
     public static void main(String[] args) {
-        //TESTING
-        /*
-        Song m = new Song("Test1", "test", "test", 5);
-        Song n = new Song("Test2", "test1", "test", 10);
-        Playlist g = new Playlist("Tester Playlist", m);
-        g.addSong(n);
-        g.getList();
-        g.organizeGenre("test");
-        g.getList(); */
-        //END OF TESTS
+        //Start of actual program
+        ArrayList<Playlist> playlists = new ArrayList<Playlist>(); //generates the list of playlists
+        ArrayList<Song> songs = new ArrayList<Song>(); //generates the list of songs
 
-        //Start of actual program (include scanner and try catches)
-        System.out.println("Welcome! This is your own playlist maker.\nYou can choose to make a song and then add it to your playlist.\n---------------------------------------------");
+        System.out.println("---------------------------------------------\nWelcome! This is your own playlist maker.\nYou can choose to make a song and then add it to your playlist.\n---------------------------------------------");
         int firstChoice = start();
-        System.out.println(firstChoice);
-        if (firstChoice == 3){ //exits program
-            System.exit(0);
-        }
-        else if (firstChoice == 2){ //wants to modify a song
-            int secondChoice = modifySong();
-            if (secondChoice == 1){ //creates a song
-                System.out.println(makeSong());
+        while (firstChoice != 3) {
+            if (firstChoice == 2) { //wants to modify a song
+                int secondChoice = modifySong();
+                if (secondChoice == 1) { //creates a song
+                    Song createdSong = makeSong();
+                    System.out.println("---------------------------------------------\n"+ createdSong.toString() +"\n---------------------------------------------");
+                    songs.add(createdSong);
+                } else if (secondChoice == 2) {//wants an already made song
+                    Song pregeneratedSong = new Song();
+                    System.out.println(pregeneratedSong);
+                } else if (secondChoice == 3) { //exits program
+                    System.exit(0);
+                }
+            } else if (firstChoice == 1) { //wants to modify a playlist
+                int secondChoice = modifyList();
+                if (secondChoice == 1) { //create new playlist
+                    playlists.add(makePlaylist());
+                    System.out.println("---------------------------------------------\nA playlist named " + playlists.getLast().getListName() + " has successfully been added.\n---------------------------------------------");
+                } else if (secondChoice == 2) {//view current playlists
+                    System.out.println("---------------------------------------------");
+                    for (Playlist i : playlists) {
+                        System.out.println("The names of the current playlists: " + i.getListName() + ", ");
+                    }
+                    System.out.println("---------------------------------------------"); //ADD A PART AFTER THIS WHERE THE USER CAN MAKE A CHOICE OF WHETHER THEY WANT TO ACCESS ONE OF THE PLAYLISTS OR NOT ("DO YOU WISH TO MODIFY ONE OF THESE PLAYLISTS?")
+                } else if (secondChoice == 3) { //exits program
+                    System.exit(0);
+                }
             }
-            else if (secondChoice == 2){//wants an already made song
-                Song pregeneratedSong = new Song();
-                System.out.println(pregeneratedSong);
-            }
-            else if (secondChoice == 3){ //exits program
-                System.exit(0);
-            }
+            firstChoice = start();
         }
-        else if (firstChoice == 1){ //wants to modify a playlist
-            System.out.println("Test1");
-        }
+        System.exit(0); //user typed 3
         //END OF PROGRAM
     }
 
@@ -57,7 +61,6 @@ public class Runner {
             System.out.println("---------------------------------------------\nSomething went wrong. Please type the number of the option you wish to choose.\n---------------------------------------------");
             finalAction = start();
         }
-        System.out.println("Returning final action" + finalAction);
         return finalAction;
     }
 
@@ -67,14 +70,36 @@ public class Runner {
         int finalAction = 0;
         try {
             int action = scan.nextInt();
-            finalAction = action;
             if (action!=1 && action!=2 && action!=3) {
                 System.out.println("---------------------------------------------\nPlease type a valid number.\n---------------------------------------------");
-                modifySong();
+                finalAction = modifySong();
+            }
+            else {
+                finalAction=action;
             }
         } catch (InputMismatchException inputMismatchException) {
             System.out.println("---------------------------------------------\nSomething went wrong. Please type the number of the option you wish to choose.\n---------------------------------------------");
-            modifySong();
+            finalAction=modifySong();
+        }
+        return finalAction;
+    }
+
+    public static int modifyList(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What you like to:\n1.create new playlist\n2.view current playlists\n3.end program");
+        int finalAction = 0;
+        try {
+            int action = scan.nextInt();
+            if (action!=1 && action!=2 && action!=3) {
+                System.out.println("---------------------------------------------\nPlease type a valid number.\n---------------------------------------------");
+                finalAction = modifyList();
+            }
+            else {
+                finalAction=action;
+            }
+        } catch (InputMismatchException inputMismatchException) {
+            System.out.println("---------------------------------------------\nSomething went wrong. Please type the number of the option you wish to choose.\n---------------------------------------------");
+            finalAction=modifyList();
         }
         return finalAction;
     }
@@ -92,5 +117,13 @@ public class Runner {
         finalSong.setStreams(scan.nextInt());
 
         return finalSong;
+    }
+
+    public static Playlist makePlaylist(){
+        Scanner scan = new Scanner(System.in);
+        Playlist playlist = new Playlist();
+        System.out.println("What will be the name of this playlist?");
+        playlist.setListName(scan.nextLine());
+        return playlist;
     }
 }
