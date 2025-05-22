@@ -30,10 +30,11 @@ public class Runner {
                     System.out.println("---------------------------------------------\nA playlist named " + playlists.getLast().getListName() + " has successfully been added.\n---------------------------------------------");
                 } else if (secondChoice == 2) {//view current playlists
                     System.out.println("---------------------------------------------");
+                    System.out.print("The names of the current playlists: ");
                     for (Playlist i : playlists) {
-                        System.out.println("The names of the current playlists: " + i.getListName() + ", ");
+                        System.out.print(i.getListName() + ", ");
                     }
-                    System.out.println("---------------------------------------------"); //ADD A PART AFTER THIS WHERE THE USER CAN MAKE A CHOICE OF WHETHER THEY WANT TO ACCESS ONE OF THE PLAYLISTS OR NOT ("DO YOU WISH TO MODIFY ONE OF THESE PLAYLISTS?")
+                    System.out.println("\n---------------------------------------------");
                 } else if (secondChoice == 3) { //exits program
                     System.exit(0);
                 }
